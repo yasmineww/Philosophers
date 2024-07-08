@@ -16,7 +16,7 @@ obj/%.o: %.c $(HEADER)
 	@printf "\rcompiling...\033[K"
 
 $(NAME): $(OBJ)
-	cc $(FLAG) $(OBJ) -o $(NAME)
+	@(cc $(FLAG) $(OBJ) -o $(NAME))
 	@printf "\r\033[K\033[33mphilo compiled\033[0m\n"
 
 clean:

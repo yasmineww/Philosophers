@@ -6,7 +6,7 @@
 /*   By: ymakhlou <ymakhlou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 15:14:05 by ymakhlou          #+#    #+#             */
-/*   Updated: 2024/07/05 18:07:18 by ymakhlou         ###   ########.fr       */
+/*   Updated: 2024/07/08 16:03:39 by ymakhlou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,9 @@ int	main (int ac, char **av)
 
 	if (ac == 5 || ac == 6)
 	{
-		parsing(ac, av, &philo);
+		parsing(av, &philo);
 	}
 	else
-	{
-		printf("Error: Wrong number of arguments\n");
-		return (1);
-	}
+		print_error("Wrong number of arguments");
 	return (0);
 }
