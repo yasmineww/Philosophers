@@ -6,7 +6,7 @@ OBJ = $(addprefix obj/, $(SRC:.c=.o))
 
 HEADER = philo.h
 
-FLAG = -Wall -Wextra -Werror -g -fsanitize=address
+FLAG = -Wall -Wextra -Werror -g #-fsanitize=address
 
 all: $(NAME)
 

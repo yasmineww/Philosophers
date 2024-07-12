@@ -6,15 +6,22 @@
 /*   By: ymakhlou <ymakhlou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 18:17:03 by ymakhlou          #+#    #+#             */
-/*   Updated: 2024/07/08 14:36:39 by ymakhlou         ###   ########.fr       */
+/*   Updated: 2024/07/12 10:32:41 by ymakhlou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	print_error(char *str)
+void	ft_putstr_fd(char *s, int fd)
 {
-	printf("Error: %s\n", str);
+	if (!s || fd < 0)
+		return ;
+	while (*s)
+	{
+		write(fd, s, 1);
+		s++;
+	}
+	write(fd, "\n", 1);
 	exit(EXIT_FAILURE);
 }
 
@@ -48,7 +55,7 @@ int	my_atoi(char *str)
 		res = (res * 10) + (*str - '0');
 		str++;
 	}
-	if (res >= 2147483648 || res <= -2147483649)
-		print_error("Argument out of range");
+	if (res >= 2147483648)
+		ft_putstr_fd("Argument out of range", 2);
 	return (res);
 }

@@ -6,7 +6,7 @@
 /*   By: ymakhlou <ymakhlou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 15:08:05 by ymakhlou          #+#    #+#             */
-/*   Updated: 2024/07/08 16:03:49 by ymakhlou         ###   ########.fr       */
+/*   Updated: 2024/07/12 10:30:52 by ymakhlou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,12 @@ typedef struct s_philo
 	int	time_to_eat;
 	int	time_to_sleep;
 	int	nmbr_times_to_eat;
-} t_philo;
+}	t_philo;
 
 int		ft_isdigit(int c);
 int		ft_strlen(char	*av);
 int		my_atoi(char *str);
 void	parsing(char **av, t_philo **philo);
-void	print_error(char *str);
+void	ft_putstr_fd(char *s, int fd);
 
 #endif

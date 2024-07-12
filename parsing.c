@@ -6,7 +6,7 @@
 /*   By: ymakhlou <ymakhlou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 18:04:00 by ymakhlou          #+#    #+#             */
-/*   Updated: 2024/07/08 16:06:34 by ymakhlou         ###   ########.fr       */
+/*   Updated: 2024/07/12 10:30:30 by ymakhlou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ void	check_valid(char *av)
 		if ((av[i] >= '0' && av[i] <= '9') || av[i] == '+'
 			|| av[i] == ' ')
 			i++;
-		else	
-			print_error("Invalid argument syntax");
+		else
+			ft_putstr_fd("Invalid argument syntax", 2);
 	}
 }
 
@@ -33,11 +33,11 @@ void	check_empty(char *av)
 
 	i = 0;
 	if (!av[0])
-		print_error("Empty argument");
+		ft_putstr_fd("Empty argument", 2);
 	while ((av[i] >= 9 && av[i] <= 13) || av[i] == ' ')
 		i++;
 	if (!av[i])
-		print_error("Empty argument"); 
+		ft_putstr_fd("Empty argument", 2);
 }
 
 void	parsing(char **av, t_philo **philo)
@@ -48,7 +48,7 @@ void	parsing(char **av, t_philo **philo)
 	while (av[i])
 	{
 		check_empty(av[i]);
-		check_valid(av[i]);   
+		check_valid(av[i]);
 		i++;
 	}
 	(*philo) = malloc(sizeof(t_philo));
@@ -58,6 +58,4 @@ void	parsing(char **av, t_philo **philo)
 	(*philo)->time_to_sleep = my_atoi(av[4]);
 	if (av[5])
 		(*philo)->nmbr_times_to_eat = my_atoi(av[5]);
-	else
-		(*philo)->nmbr_times_to_eat = -1;
 }
