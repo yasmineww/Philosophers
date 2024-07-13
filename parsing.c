@@ -6,7 +6,7 @@
 /*   By: ymakhlou <ymakhlou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 18:04:00 by ymakhlou          #+#    #+#             */
-/*   Updated: 2024/07/13 10:55:26 by ymakhlou         ###   ########.fr       */
+/*   Updated: 2024/07/13 15:13:44 by ymakhlou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	init_philo(t_info **info)
 	(*info)->forks = malloc (sizeof(pthread_mutex_t) * i);
 	if (!(*info)->philo || !(*info)->forks)
 		ft_putstr_fd("Malloc failed", 2);
-	while (i > (*info)->number_of_philos)
+	while (i > 0)
 	{
 		i--;
 		if (pthread_mutex_init(&(*info)->forks[i], NULL) != 0)
@@ -57,10 +57,10 @@ void	init_philo(t_info **info)
 		(*info)->philo[i].id = i + 1;
 		(*info)->philo[i].meal = 0;
 		(*info)->philo[i].r_fork = &(*info)->forks[i];
-		// if ((i + 1) == (*info)->number_of_philos)
-		// 	(*info)->philo[i].l_fork = i - 1;
-		// else
-		// 	(*info)->philo[i].l_fork = i + 1;
+		(*info)->philo[i].l_fork = &(*info)->forks[(i + 1) % (*info)->number_of_philos];
+		// printf("Philo number %d => \n", i + 1);
+		// printf("Right fork => [%p] \n", (*info)->philo[i].r_fork);
+		// printf("Left fork => [%p] \n", (*info)->philo[i].l_fork);
 	}
 }
 
@@ -73,7 +73,7 @@ void	save_data(char **av, t_info **info)
 	if (av[5])
 		(*info)->nmbr_times_to_eat = my_atoi(av[5]);
 	else
-		(*info)->nmbr_times_to_eat = -1; 
+		(*info)->nmbr_times_to_eat = -1;
 }
 
 void	parsing(char **av, t_info **info)
