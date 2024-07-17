@@ -6,7 +6,7 @@
 /*   By: ymakhlou <ymakhlou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 15:14:05 by ymakhlou          #+#    #+#             */
-/*   Updated: 2024/07/17 11:11:06 by ymakhlou         ###   ########.fr       */
+/*   Updated: 2024/07/17 11:33:30 by ymakhlou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,14 @@ int	main(int ac, char **av)
 	info = NULL;
 	if (ac == 5 || ac == 6)
 	{
-		parsing(av, &info);
+		if (parsing(av, &info))
+			return (1);
 		// simulation();
 		free(info->philo);
 		free(info->forks);
 		free(info);
+		return (0);
 	}
-	else
-		ft_putstr_fd("Wrong number of arguments", 2);
-	return (0);
+	ft_putstr_fd("Wrong number of arguments!", 2);
+	return (1);
 }

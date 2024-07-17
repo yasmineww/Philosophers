@@ -6,13 +6,13 @@
 /*   By: ymakhlou <ymakhlou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 18:04:00 by ymakhlou          #+#    #+#             */
-/*   Updated: 2024/07/17 11:17:03 by ymakhlou         ###   ########.fr       */
+/*   Updated: 2024/07/17 11:33:29 by ymakhlou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	check_valid(char *av)
+int	check_valid(char *av)
 {
 	int	i;
 
@@ -23,24 +23,35 @@ void	check_valid(char *av)
 			|| av[i] == ' ')
 			i++;
 		else
-			ft_putstr_fd("Invalid argument syntax", 2);
+		{
+			ft_putstr_fd("Invalid argument syntax!", 2);
+			return (1);
+		}
 	}
+	return (0);
 }
 
-void	check_empty(char *av)
+int	check_empty(char *av)
 {
 	int	i;
 
 	i = 0;
 	if (!av[0])
-		ft_putstr_fd("Empty argument", 2);
+	{
+		ft_putstr_fd("Empty argument!", 2);
+		return (1);
+	}
 	while ((av[i] >= 9 && av[i] <= 13) || av[i] == ' ')
 		i++;
 	if (!av[i])
-		ft_putstr_fd("Empty argument", 2);
+	{
+		ft_putstr_fd("Empty argument!", 2);
+		return (1);
+	}
+	return (0);
 }
 
-void	init_philo(t_info **info)
+int	init_philo(t_info **info)
 {
 	int	i;
 
@@ -48,20 +59,24 @@ void	init_philo(t_info **info)
 	(*info)->philo = malloc (sizeof(t_philo) * i);
 	(*info)->forks = malloc (sizeof(pthread_mutex_t) * i);
 	if (!(*info)->philo || !(*info)->forks)
-		ft_putstr_fd("Malloc failed", 2);
+	{
+		ft_putstr_fd("Malloc failed!", 2);
+		return (1);
+	}
 	while (i > 0)
 	{
 		i--;
 		if (pthread_mutex_init(&(*info)->forks[i], NULL))
-			ft_putstr_fd("Mutex init failed", 2);
+		{
+			ft_putstr_fd("Mutex init failed!", 2);
+			return (1);
+		}
 		(*info)->philo[i].id = i + 1;
 		(*info)->philo[i].meal = 0;
 		(*info)->philo[i].r_fork = &(*info)->forks[i];
 		(*info)->philo[i].l_fork = &(*info)->forks[(i + 1) % (*info)->number_of_philos];
-		// printf("Philo number %d => \n", i + 1);
-		// printf("Right fork => [%p] \n", (*info)->philo[i].r_fork);
-		// printf("Left fork => [%p] \n", (*info)->philo[i].l_fork);
 	}
+	return (0);
 }
 
 void	save_data(char **av, t_info **info)
@@ -76,23 +91,24 @@ void	save_data(char **av, t_info **info)
 		(*info)->nmbr_times_to_eat = -1;
 }
 
-void	parsing(char **av, t_info **info)
+int	parsing(char **av, t_info **info)
 {
 	int	i;
 
 	i = 1;
-	// pthread_mutex_lock(&g_lock);
-	// pthread_mutex_unlock(&g_lock);
-	// pthread_mutex_init(&g_lock, NULL);
 	while (av[i])
 	{
-		check_empty(av[i]);
-		check_valid(av[i]);
+		if (check_empty(av[i]) || check_valid(av[i]))
+			return (1);
 		i++;
 	}
 	(*info) = malloc(sizeof(t_info));
 	if (!*info)
-		ft_putstr_fd("Malloc failed", 2);
+	{
+		ft_putstr_fd("Malloc failed!", 2);
+		return (1);
+	}
 	save_data(av, info);
 	init_philo(info);
+	return (0);
 }

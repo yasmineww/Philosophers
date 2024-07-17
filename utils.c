@@ -6,7 +6,7 @@
 /*   By: ymakhlou <ymakhlou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 18:17:03 by ymakhlou          #+#    #+#             */
-/*   Updated: 2024/07/12 10:32:41 by ymakhlou         ###   ########.fr       */
+/*   Updated: 2024/07/17 11:23:12 by ymakhlou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	ft_putstr_fd(char *s, int fd)
 		s++;
 	}
 	write(fd, "\n", 1);
-	exit(EXIT_FAILURE);
 }
 
 int	ft_isdigit(int c)
@@ -56,6 +55,9 @@ int	my_atoi(char *str)
 		str++;
 	}
 	if (res >= 2147483648)
+	{
 		ft_putstr_fd("Argument out of range", 2);
+		return (1);
+	}
 	return (res);
 }

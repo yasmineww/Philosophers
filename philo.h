@@ -6,7 +6,7 @@
 /*   By: ymakhlou <ymakhlou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 15:08:05 by ymakhlou          #+#    #+#             */
-/*   Updated: 2024/07/15 12:10:45 by ymakhlou         ###   ########.fr       */
+/*   Updated: 2024/07/17 11:26:01 by ymakhlou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ typedef struct s_info
 int		ft_isdigit(int c);
 int		ft_strlen(char	*av);
 int		my_atoi(char *str);
-void	parsing(char **av, t_info **philo);
+int		parsing(char **av, t_info **philo);
 void	ft_putstr_fd(char *s, int fd);
 
 #endif
