@@ -6,7 +6,7 @@
 /*   By: ymakhlou <ymakhlou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 18:04:00 by ymakhlou          #+#    #+#             */
-/*   Updated: 2024/07/13 15:13:44 by ymakhlou         ###   ########.fr       */
+/*   Updated: 2024/07/17 11:17:03 by ymakhlou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	init_philo(t_info **info)
 	while (i > 0)
 	{
 		i--;
-		if (pthread_mutex_init(&(*info)->forks[i], NULL) != 0)
+		if (pthread_mutex_init(&(*info)->forks[i], NULL))
 			ft_putstr_fd("Mutex init failed", 2);
 		(*info)->philo[i].id = i + 1;
 		(*info)->philo[i].meal = 0;
