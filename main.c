@@ -6,7 +6,7 @@
 /*   By: ymakhlou <ymakhlou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 15:14:05 by ymakhlou          #+#    #+#             */
-/*   Updated: 2024/07/17 11:33:30 by ymakhlou         ###   ########.fr       */
+/*   Updated: 2024/07/17 17:40:33 by ymakhlou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	main(int ac, char **av)
 	{
 		if (parsing(av, &info))
 			return (1);
-		// simulation();
+		// simulation(info);
 		free(info->philo);
 		free(info->forks);
 		free(info);

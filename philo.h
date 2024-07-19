@@ -6,7 +6,7 @@
 /*   By: ymakhlou <ymakhlou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 15:08:05 by ymakhlou          #+#    #+#             */
-/*   Updated: 2024/07/17 11:26:01 by ymakhlou         ###   ########.fr       */
+/*   Updated: 2024/07/17 18:01:02 by ymakhlou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ typedef struct s_philo
 {
 	pthread_mutex_t	*r_fork;
 	pthread_mutex_t	*l_fork;
+	pthread_t		thread;
 	struct s_info	*info;
 	int				meal;
 	int				id;
@@ -31,7 +32,7 @@ typedef struct s_info
 {
 	t_philo				*philo;
 	pthread_mutex_t		*forks;
-	int					number_of_philos;
+	int					total_philos;
 	int					time_to_die;
 	int					time_to_eat;
 	int					time_to_sleep;

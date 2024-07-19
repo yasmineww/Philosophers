@@ -6,7 +6,7 @@
 /*   By: ymakhlou <ymakhlou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 18:04:00 by ymakhlou          #+#    #+#             */
-/*   Updated: 2024/07/17 11:33:29 by ymakhlou         ###   ########.fr       */
+/*   Updated: 2024/07/17 17:51:11 by ymakhlou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,17 +55,16 @@ int	init_philo(t_info **info)
 {
 	int	i;
 
-	i = (*info)->number_of_philos;
-	(*info)->philo = malloc (sizeof(t_philo) * i);
-	(*info)->forks = malloc (sizeof(pthread_mutex_t) * i);
+	i = 0;
+	(*info)->philo = malloc (sizeof(t_philo) * (*info)->total_philos);
+	(*info)->forks = malloc (sizeof(pthread_mutex_t) * (*info)->total_philos);
 	if (!(*info)->philo || !(*info)->forks)
 	{
 		ft_putstr_fd("Malloc failed!", 2);
 		return (1);
 	}
-	while (i > 0)
+	while (i < (*info)->total_philos)
 	{
-		i--;
 		if (pthread_mutex_init(&(*info)->forks[i], NULL))
 		{
 			ft_putstr_fd("Mutex init failed!", 2);
@@ -74,14 +73,16 @@ int	init_philo(t_info **info)
 		(*info)->philo[i].id = i + 1;
 		(*info)->philo[i].meal = 0;
 		(*info)->philo[i].r_fork = &(*info)->forks[i];
-		(*info)->philo[i].l_fork = &(*info)->forks[(i + 1) % (*info)->number_of_philos];
+		(*info)->philo[i].l_fork = &(*info)->forks[(i + 1)
+			% (*info)->total_philos];
+		i++;
 	}
 	return (0);
 }
 
 void	save_data(char **av, t_info **info)
 {
-	(*info)->number_of_philos = my_atoi(av[1]);
+	(*info)->total_philos = my_atoi(av[1]);
 	(*info)->time_to_die = my_atoi(av[2]);
 	(*info)->time_to_eat = my_atoi(av[3]);
 	(*info)->time_to_sleep = my_atoi(av[4]);
