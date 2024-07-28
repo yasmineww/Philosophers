@@ -6,11 +6,40 @@
 /*   By: ymakhlou <ymakhlou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 18:17:03 by ymakhlou          #+#    #+#             */
-/*   Updated: 2024/07/17 11:23:12 by ymakhlou         ###   ########.fr       */
+/*   Updated: 2024/07/28 16:00:03 by ymakhlou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+int	get_current_time(void)
+{
+	struct timeval	time;
+
+	if (gettimeofday(&time, NULL) == -1)
+		write(2, "gettimeofday() error\n", 22);
+	return (time.tv_sec * 1000 + time.tv_usec / 1000);
+}
+
+int	check_empty(char *av)
+{
+	int	i;
+
+	i = 0;
+	if (!av[0])
+	{
+		ft_putstr_fd("Empty argument!", 2);
+		return (1);
+	}
+	while ((av[i] >= 9 && av[i] <= 13) || av[i] == ' ')
+		i++;
+	if (!av[i])
+	{
+		ft_putstr_fd("Empty argument!", 2);
+		return (1);
+	}
+	return (0);
+}
 
 void	ft_putstr_fd(char *s, int fd)
 {

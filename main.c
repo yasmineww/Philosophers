@@ -6,7 +6,7 @@
 /*   By: ymakhlou <ymakhlou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 15:14:05 by ymakhlou          #+#    #+#             */
-/*   Updated: 2024/07/17 17:40:33 by ymakhlou         ###   ########.fr       */
+/*   Updated: 2024/07/28 17:02:37 by ymakhlou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,13 @@
 // {
 // 	system("leaks philo");
 // }
+
+void	free_leaks(t_info *info)
+{
+	free(info->philo);
+	free(info->forks);
+	free(info);
+}
 
 int	main(int ac, char **av)
 {
@@ -27,10 +34,8 @@ int	main(int ac, char **av)
 	{
 		if (parsing(av, &info))
 			return (1);
-		// simulation(info);
-		free(info->philo);
-		free(info->forks);
-		free(info);
+		simulation(info);
+		free_leaks(info);
 		return (0);
 	}
 	ft_putstr_fd("Wrong number of arguments!", 2);
