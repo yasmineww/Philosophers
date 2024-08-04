@@ -6,32 +6,11 @@
 /*   By: ymakhlou <ymakhlou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 18:04:00 by ymakhlou          #+#    #+#             */
-/*   Updated: 2024/07/28 18:09:09 by ymakhlou         ###   ########.fr       */
+/*   Updated: 2024/08/04 16:06:33 by ymakhlou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-int	check_data_limit(t_info *info)
-{
-	if (info->total_philos == 0)
-	{
-		ft_putstr_fd("There are no philosophers on the table!", 2);
-		return (1);
-	}
-	else if (info->total_philos > 200)
-	{
-		ft_putstr_fd("Number of philoshophers should't exceed 200!", 2);
-		return (1);
-	}
-	else if (info->time_to_die < 60 || info->time_to_eat < 60
-		|| info->time_to_sleep < 60)
-	{
-		ft_putstr_fd("Time should be at least 60ms!", 2);
-		return (1);
-	}
-	return (0);
-}
 
 int	check_valid(char *av)
 {
@@ -44,12 +23,8 @@ int	check_valid(char *av)
 			|| av[i] == ' ')
 			i++;
 		else
-		{
-			ft_putstr_fd("Invalid argument syntax!", 2);
-			return (1);
-		}
+			return (ft_putstr_fd("Invalid argument syntax!", 2), 1);
 	}
-	
 	return (0);
 }
 
@@ -59,19 +34,15 @@ int	init_philo(t_info **info)
 
 	i = -1;
 	(*info)->philo = malloc (sizeof(t_philo) * (*info)->total_philos);
+	if (!(*info)->philo)
+		return (ft_putstr_fd("Malloc failed!", 2), 1);
 	(*info)->forks = malloc (sizeof(pthread_mutex_t) * (*info)->total_philos);
-	if (!(*info)->philo || !(*info)->forks)
-	{
-		ft_putstr_fd("Malloc failed!", 2);
-		return (1);
-	}
+	if (!(*info)->forks)
+		return (ft_putstr_fd("Malloc failed!", 2), 1);
 	while (++i < (*info)->total_philos)
 	{
 		if (pthread_mutex_init(&(*info)->forks[i], NULL))
-		{
-			ft_putstr_fd("Mutex init failed!", 2);
-			return (1);
-		}
+			return (ft_putstr_fd("Mutex init failed!", 2), 1);
 		(*info)->philo[i].id = i + 1;
 		(*info)->philo[i].meal = 0;
 		(*info)->philo[i].r_fork = &(*info)->forks[i];
@@ -82,10 +53,13 @@ int	init_philo(t_info **info)
 	return (0);
 }
 
-void	save_data(char **av, t_info **info)
+int	save_data(char **av, t_info **info)
 {
 	(*info)->death = 0;
-	(*info)->time = 0;
+	(*info)->full = 0;
+	(*info)->time = get_current_time();
+	if (pthread_mutex_init(&(*info)->print, NULL))
+		return (ft_putstr_fd("Mutex init failed!", 2), 1);
 	(*info)->total_philos = my_atoi(av[1]);
 	(*info)->time_to_die = my_atoi(av[2]);
 	(*info)->time_to_eat = my_atoi(av[3]);
@@ -94,6 +68,7 @@ void	save_data(char **av, t_info **info)
 		(*info)->must_eat = my_atoi(av[5]);
 	else
 		(*info)->must_eat = -1;
+	return (0);
 }
 
 int	parsing(char **av, t_info **info)
@@ -109,12 +84,8 @@ int	parsing(char **av, t_info **info)
 	}
 	(*info) = malloc(sizeof(t_info));
 	if (!*info)
-	{
-		ft_putstr_fd("Malloc failed!", 2);
-		return (1);
-	}
-	save_data(av, info);
-	if (check_data_limit(*info))
+		return (ft_putstr_fd("Malloc failed!", 2), 1);
+	if (save_data(av, info))
 		return (free_leaks(*info) ,1);	
 	init_philo(info);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: ymakhlou <ymakhlou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 15:08:05 by ymakhlou          #+#    #+#             */
-/*   Updated: 2024/07/28 18:03:55 by ymakhlou         ###   ########.fr       */
+/*   Updated: 2024/08/04 16:05:30 by ymakhlou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct s_info
 {
 	t_philo				*philo;
 	pthread_mutex_t		*forks;
+	pthread_mutex_t		print;
 	int					total_philos;
 	int					time_to_die;
 	int					time_to_eat;
@@ -43,6 +44,7 @@ typedef struct s_info
 	int					must_eat;
 	int					time;
 	int					death;
+	int					full;
 }	t_info;
 
 int		ft_isdigit(int c);
@@ -52,6 +54,7 @@ int		parsing(char **av, t_info **philo);
 void	ft_putstr_fd(char *s, int fd);
 void	simulation(t_info *info);
 int		get_current_time(void);
+int		ft_usleep(size_t milliseconds);
 void	free_leaks(t_info *info);
 int		check_empty(char *av);
 

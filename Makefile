@@ -1,12 +1,12 @@
 NAME = philo
 
-SRC = main.c parsing.c utils.c simulation.c
+SRC = main.c parsing.c utils.c utils2.c simulation.c
 
 OBJ = $(addprefix obj/, $(SRC:.c=.o))
 
 HEADER = philo.h
 
-FLAG = -Wall -Wextra -Werror #-g -fsanitize=thread
+FLAG = -Wall -Wextra -Werror -g -fsanitize=address #-fsanitize=thread -fsanitize=address
 
 all: $(NAME)
 
