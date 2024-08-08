@@ -6,13 +6,13 @@
 /*   By: ymakhlou <ymakhlou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 10:06:58 by ymakhlou          #+#    #+#             */
-/*   Updated: 2024/08/01 10:57:56 by ymakhlou         ###   ########.fr       */
+/*   Updated: 2024/08/06 16:29:21 by ymakhlou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int		ft_usleep(size_t milliseconds)
+int	ft_usleep(size_t milliseconds)
 {
 	size_t	start;
 
@@ -22,7 +22,7 @@ int		ft_usleep(size_t milliseconds)
 	return (0);
 }
 
-int	get_current_time(void)
+size_t	get_current_time(void)
 {
 	struct timeval	time;
 

@@ -6,7 +6,7 @@
 /*   By: ymakhlou <ymakhlou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 15:14:05 by ymakhlou          #+#    #+#             */
-/*   Updated: 2024/07/28 17:02:37 by ymakhlou         ###   ########.fr       */
+/*   Updated: 2024/08/08 11:21:47 by ymakhlou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ int	main(int ac, char **av)
 	{
 		if (parsing(av, &info))
 			return (1);
+		if (info->total_philos == 0 || info->must_eat == 0)
+			return (0);
 		simulation(info);
 		free_leaks(info);
 		return (0);
