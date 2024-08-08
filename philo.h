@@ -6,7 +6,7 @@
 /*   By: ymakhlou <ymakhlou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 15:08:05 by ymakhlou          #+#    #+#             */
-/*   Updated: 2024/08/08 11:02:08 by ymakhlou         ###   ########.fr       */
+/*   Updated: 2024/08/08 12:25:32 by ymakhlou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ typedef struct s_info
 	int					time_to_sleep;
 	int					must_eat;
 	size_t				time;
-	int					death;
 	int					full;
 }	t_info;
 
@@ -55,8 +54,8 @@ int		my_atoi(char *str);
 int		parsing(char **av, t_info **philo);
 void	ft_putstr_fd(char *s, int fd);
 int		simulation(t_info *info);
-size_t	get_current_time(void);
-int		ft_usleep(size_t milliseconds);
+size_t	get_time(void);
+int		my_usleep(size_t milliseconds);
 void	free_leaks(t_info *info);
 int		check_empty(char *av);
 

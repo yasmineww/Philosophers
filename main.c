@@ -6,19 +6,23 @@
 /*   By: ymakhlou <ymakhlou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 15:14:05 by ymakhlou          #+#    #+#             */
-/*   Updated: 2024/08/08 11:21:47 by ymakhlou         ###   ########.fr       */
+/*   Updated: 2024/08/08 12:27:37 by ymakhlou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-// void	f()
-// {
-// 	system("leaks philo");
-// }
+void	f()
+{
+	system("leaks philo");
+}
 
 void	free_leaks(t_info *info)
 {
+	pthread_mutex_destroy(&info->print);
+	pthread_mutex_destroy(&info->lock_death);
+	pthread_mutex_destroy(&info->lock_full);
+	pthread_mutex_destroy(info->forks);
 	free(info->philo);
 	free(info->forks);
 	free(info);
