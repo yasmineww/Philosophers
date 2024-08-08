@@ -6,7 +6,7 @@
 /*   By: ymakhlou <ymakhlou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 11:08:41 by ymakhlou          #+#    #+#             */
-/*   Updated: 2024/08/08 12:23:00 by ymakhlou         ###   ########.fr       */
+/*   Updated: 2024/08/08 18:51:12 by ymakhlou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,10 +83,10 @@ void	guardian(t_info *info)
 		}
 		pthread_mutex_unlock(&info->lock_death);
 		pthread_mutex_lock(&info->lock_full);
-		if (info->full == info->total_philos)
+		if (info->full == info->number_of_philosophers)
 			break ;
 		pthread_mutex_unlock(&info->lock_full);
-		if (++i == info->total_philos)
+		if (++i == info->number_of_philosophers)
 			i = 0;
 	}
 }
@@ -97,15 +97,12 @@ int	simulation(t_info *info)
 
 	i = 0;
 	info->time = get_time();
-	while (i < info->total_philos)
+	while (i < info->number_of_philosophers)
 	{
 		info->philo[i].last_meal = get_time();
 		if (pthread_create(&info->philo[i].thread, NULL, start_routine,
 				&info->philo[i]))
-		{
-			ft_putstr_fd("Thread creation failed!", 2);
-			return (1);
-		}
+			return (ft_putstr_fd("Thread creation failed!", 2), 1);
 		if (pthread_detach(info->philo[i].thread))
 			return (ft_putstr_fd("Thread detach failed!", 2), 1);
 		i++;

@@ -1,30 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ymakhlou <ymakhlou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/05 15:14:05 by ymakhlou          #+#    #+#             */
-/*   Updated: 2024/08/08 12:27:37 by ymakhlou         ###   ########.fr       */
+/*   Created: 2024/08/08 12:35:25 by ymakhlou          #+#    #+#             */
+/*   Updated: 2024/08/08 19:00:34 by ymakhlou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
-
-void	f()
-{
-	system("leaks philo");
-}
+#include "philo_bonus.h"
 
 void	free_leaks(t_info *info)
 {
-	pthread_mutex_destroy(&info->print);
-	pthread_mutex_destroy(&info->lock_death);
-	pthread_mutex_destroy(&info->lock_full);
-	pthread_mutex_destroy(info->forks);
-	free(info->philo);
-	free(info->forks);
+	sem_close(info->print);
+	sem_close(info->forks);
+	sem_unlink("/forks");
+	sem_unlink("/print");
 	free(info);
 }
 
@@ -38,8 +31,6 @@ int	main(int ac, char **av)
 	{
 		if (parsing(av, &info))
 			return (1);
-		if (info->total_philos == 0 || info->must_eat == 0)
-			return (0);
 		simulation(info);
 		free_leaks(info);
 		return (0);

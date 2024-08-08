@@ -6,7 +6,7 @@
 /*   By: ymakhlou <ymakhlou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 15:08:05 by ymakhlou          #+#    #+#             */
-/*   Updated: 2024/08/08 12:25:32 by ymakhlou         ###   ########.fr       */
+/*   Updated: 2024/08/08 12:43:17 by ymakhlou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ typedef struct s_info
 	pthread_mutex_t		print;
 	pthread_mutex_t		lock_death;
 	pthread_mutex_t		lock_full;
-	int					total_philos;
+	int					number_of_philosophers;
 	size_t				time_to_die;
 	int					time_to_eat;
 	int					time_to_sleep;
