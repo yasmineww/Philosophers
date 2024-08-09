@@ -6,7 +6,7 @@
 /*   By: ymakhlou <ymakhlou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 12:36:11 by ymakhlou          #+#    #+#             */
-/*   Updated: 2024/08/09 12:45:32 by ymakhlou         ###   ########.fr       */
+/*   Updated: 2024/08/09 16:23:27 by ymakhlou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@
 #include <semaphore.h>
 #include <signal.h>
 
-# define EXIT_DEATH	10
-# define EXIT_FULL	20
+# define EXIT_DEATH	1
+# define EXIT_FULL	0
 
 typedef struct s_info
 {
