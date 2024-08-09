@@ -6,7 +6,7 @@
 /*   By: ymakhlou <ymakhlou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 18:04:00 by ymakhlou          #+#    #+#             */
-/*   Updated: 2024/08/08 18:54:08 by ymakhlou         ###   ########.fr       */
+/*   Updated: 2024/08/09 10:49:37 by ymakhlou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,11 @@ int	init_data(t_info **info)
 	sem_unlink("/forks");
 	sem_unlink("/print");
 	(*info)->forks = sem_open("/forks", O_CREAT, 0644, (*info)->number_of_philosophers);
+	if ((*info)->forks == SEM_FAILED)
+		return (1);
 	(*info)->print = sem_open("/print", O_CREAT, 0644, 1);
+	if ((*info)->print == SEM_FAILED)
+		return (1);
 	return (0);
 }
 

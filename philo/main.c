@@ -6,7 +6,7 @@
 /*   By: ymakhlou <ymakhlou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 15:14:05 by ymakhlou          #+#    #+#             */
-/*   Updated: 2024/08/08 16:33:48 by ymakhlou         ###   ########.fr       */
+/*   Updated: 2024/08/09 13:54:39 by ymakhlou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,18 @@ void	f()
 
 void	free_leaks(t_info *info)
 {
+	int	i;
+
+	i = 0;
 	pthread_mutex_destroy(&info->print);
 	pthread_mutex_destroy(&info->lock_death);
 	pthread_mutex_destroy(&info->lock_full);
+	while (i < info->number_of_philosophers)
+	{
+		pthread_mutex_destroy(&info->philo[i].r_fork);
+		pthread_mutex_destroy(&info->philo[i].l_fork);
+		i++;
+	}
 	pthread_mutex_destroy(info->forks);
 	free(info->philo);
 	free(info->forks);
