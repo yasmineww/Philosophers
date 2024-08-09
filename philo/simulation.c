@@ -6,7 +6,7 @@
 /*   By: ymakhlou <ymakhlou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 11:08:41 by ymakhlou          #+#    #+#             */
-/*   Updated: 2024/08/08 18:51:12 by ymakhlou         ###   ########.fr       */
+/*   Updated: 2024/08/09 11:17:05 by ymakhlou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	my_print(int timestamp, int id, char *str, t_info *info)
 {
+	usleep(100);
 	pthread_mutex_lock(&info->print);
 	printf("%d %d %s\n", timestamp, id, str);
 	pthread_mutex_unlock(&info->print);
