@@ -6,7 +6,7 @@
 /*   By: ymakhlou <ymakhlou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 16:37:18 by ymakhlou          #+#    #+#             */
-/*   Updated: 2024/08/09 16:38:04 by ymakhlou         ###   ########.fr       */
+/*   Updated: 2024/08/11 20:30:52 by ymakhlou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	wait_child_process(t_info *info, pid_t *pid)
 
 	i = -1;
 	counter = 1;
-	exit_status = 0;
+	exit_status = -1;
 	waitpid(-1, &exit_status, 0);
 	if (exit_status == EXIT_DEATH)
 	{
@@ -103,7 +103,6 @@ int	simulation(t_info *info)
 	while (++i < info->number_of_philosophers)
 	{
 		pid[i] = fork();
-		info->last_meal = get_time();
 		if (pid[i] == 0)
 		{
 			info->id = i + 1;

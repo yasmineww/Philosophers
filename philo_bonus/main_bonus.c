@@ -6,7 +6,7 @@
 /*   By: ymakhlou <ymakhlou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 12:35:25 by ymakhlou          #+#    #+#             */
-/*   Updated: 2024/08/08 19:00:34 by ymakhlou         ###   ########.fr       */
+/*   Updated: 2024/08/11 20:31:47 by ymakhlou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ int	main(int ac, char **av)
 {
 	t_info	*info;
 
-	// atexit(f);
 	info = NULL;
 	if (ac == 5 || ac == 6)
 	{

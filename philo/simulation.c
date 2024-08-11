@@ -6,7 +6,7 @@
 /*   By: ymakhlou <ymakhlou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 11:08:41 by ymakhlou          #+#    #+#             */
-/*   Updated: 2024/08/09 11:17:05 by ymakhlou         ###   ########.fr       */
+/*   Updated: 2024/08/11 20:28:13 by ymakhlou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	*start_routine(void *philo_x)
 	philo = (t_philo *)philo_x;
 	i = philo->info->must_eat;
 	if (philo->id % 2 == 1)
-		usleep(200);
+		my_usleep(200);
 	while (i)
 	{
 		eating(&philo);

@@ -6,7 +6,7 @@ OBJ_BONUS = $(addprefix obj_bonus/, $(SRC_BONUS:.c=.o))
 
 HEADER = philo_bonus.h
 
-FLAG = -Wall -Wextra -Werror #-g -fsanitize=thread 
+FLAG = -Wall -Wextra -Werror
 
 all: $(NAME)
 
