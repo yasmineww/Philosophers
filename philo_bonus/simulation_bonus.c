@@ -6,7 +6,7 @@
 /*   By: ymakhlou <ymakhlou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 16:37:18 by ymakhlou          #+#    #+#             */
-/*   Updated: 2024/08/11 20:30:52 by ymakhlou         ###   ########.fr       */
+/*   Updated: 2024/08/13 16:08:27 by ymakhlou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	routine(t_info *info)
 
 	i = info->must_eat;
 	if (info->id % 2 == 1)
-		usleep(200);
+		usleep(1000);
 	while (i)
 	{
 		sem_wait(info->forks);
@@ -52,13 +52,14 @@ void	*guardian(void *inf)
 	info = (t_info *)inf;	
 	while (1)
 	{
+		usleep(100);
 		if (get_time() - info->last_meal >= info->time_to_die)
 		{
 			sem_wait(info->print);
 			printf("%ld %d died\n", get_time() - info->time, info->id);
 			exit(EXIT_DEATH);
 		}
-		else if (info->meal == info->must_eat)
+		if (info->meal == info->must_eat)
 			exit(EXIT_FULL);
 	}
 }
@@ -66,24 +67,21 @@ void	*guardian(void *inf)
 int	wait_child_process(t_info *info, pid_t *pid)
 {
 	int	i;
-	int	counter;
 	int	exit_status;
 
 	i = -1;
-	counter = 1;
 	exit_status = -1;
-	waitpid(-1, &exit_status, 0);
-	if (exit_status == EXIT_DEATH)
+	while (++i < info->number_of_philosophers)
 	{
-		while (++i < info->number_of_philosophers)
-			kill(pid[i], SIGKILL);
-	}
-	else if (exit_status == EXIT_FULL)
-	{
-		while (counter < info->number_of_philosophers)
+		waitpid(-1, &exit_status, 0);
+		if (exit_status)
 		{
-			counter++;
-			waitpid(-1, &exit_status, 0);
+			i = 0;
+			while (i < info->number_of_philosophers)
+			{
+				kill(pid[i], SIGKILL);
+				i++;
+			}
 		}
 	}
 	free(pid);
@@ -98,7 +96,7 @@ int	simulation(t_info *info)
 	i = -1;
 	pid = malloc(sizeof(pid_t) * info->number_of_philosophers);
 	if (!pid)
-		return (ft_putstr_fd("Malloc failed!", 2), 1);
+		exit(EXIT_FAILURE);
 	info->time = get_time();
 	while (++i < info->number_of_philosophers)
 	{
@@ -108,11 +106,11 @@ int	simulation(t_info *info)
 			info->id = i + 1;
 			info->last_meal = get_time();
 			if (pthread_create(&info->thread, NULL, guardian, info))
-				return(free(pid), ft_putstr_fd("Thread creation failed!", 2), 1);
+				exit(EXIT_FAILURE);
 			routine(info);
 		}
 		else if (pid[i] == -1)
-			return (ft_putstr_fd("Fork failed!", 2), 1);
+			exit(EXIT_FAILURE);
 	}
 	wait_child_process(info, pid);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: ymakhlou <ymakhlou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 18:04:00 by ymakhlou          #+#    #+#             */
-/*   Updated: 2024/08/09 10:49:37 by ymakhlou         ###   ########.fr       */
+/*   Updated: 2024/08/13 16:10:22 by ymakhlou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	check_valid(char *av)
 	return (0);
 }
 
-int	init_data(t_info **info)
+void	init_data(t_info **info)
 {
 	int	i;
 
@@ -37,19 +37,23 @@ int	init_data(t_info **info)
 	sem_unlink("/print");
 	(*info)->forks = sem_open("/forks", O_CREAT, 0644, (*info)->number_of_philosophers);
 	if ((*info)->forks == SEM_FAILED)
-		return (1);
+		exit(EXIT_FAILURE);
 	(*info)->print = sem_open("/print", O_CREAT, 0644, 1);
 	if ((*info)->print == SEM_FAILED)
-		return (1);
-	return (0);
+		exit(EXIT_FAILURE);
 }
 
-int	save_data(char **av, t_info **info)
+void	save_data(char **av, t_info **info)
 {
 	(*info)->full = 0;
 	(*info)->meal = 0;
 	(*info)->time = get_time();
 	(*info)->number_of_philosophers = my_atoi(av[1]);
+	if ((*info)->number_of_philosophers > 200)
+	{
+		ft_putstr_fd("Argument out of range!", 2);
+		exit(EXIT_FAILURE);
+	}	
 	(*info)->time_to_die = my_atoi(av[2]);
 	(*info)->time_to_eat = my_atoi(av[3]);
 	(*info)->time_to_sleep = my_atoi(av[4]);
@@ -58,8 +62,7 @@ int	save_data(char **av, t_info **info)
 	else
 		(*info)->must_eat = -1;
 	if ((*info)->number_of_philosophers == 0 || (*info)->must_eat == 0)
-		return (1);
-	return (0);
+		exit(EXIT_FAILURE);
 }
 
 int	parsing(char **av, t_info **info)
@@ -70,17 +73,13 @@ int	parsing(char **av, t_info **info)
 	while (av[i])
 	{
 		if (check_empty(av[i]) || check_valid(av[i]))
-			exit(1);
+			exit(EXIT_FAILURE);
 		i++;
 	}
 	(*info) = malloc(sizeof(t_info));
 	if (!*info)
-		return (ft_putstr_fd("Malloc failed!", 2), 1);
-	if (save_data(av, info))
-	{
-		free_leaks(*info);
-		exit(0);
-	}
+		exit(EXIT_FAILURE);
+	save_data(av, info);
 	init_data(info);
 	return (0);
 }

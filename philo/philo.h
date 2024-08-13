@@ -6,7 +6,7 @@
 /*   By: ymakhlou <ymakhlou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 15:08:05 by ymakhlou          #+#    #+#             */
-/*   Updated: 2024/08/08 12:43:17 by ymakhlou         ###   ########.fr       */
+/*   Updated: 2024/08/13 16:01:46 by ymakhlou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,5 +58,6 @@ size_t	get_time(void);
 int		my_usleep(size_t milliseconds);
 void	free_leaks(t_info *info);
 int		check_empty(char *av);
+void	free_info(t_info *info);
 
 #endif

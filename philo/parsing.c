@@ -6,7 +6,7 @@
 /*   By: ymakhlou <ymakhlou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 18:04:00 by ymakhlou          #+#    #+#             */
-/*   Updated: 2024/08/08 16:35:20 by ymakhlou         ###   ########.fr       */
+/*   Updated: 2024/08/13 16:01:21 by ymakhlou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ int	save_data(char **av, t_info **info)
 	if (pthread_mutex_init(&(*info)->lock_full, NULL))
 		return (ft_putstr_fd("Mutex init failed!", 2), 1);
 	(*info)->number_of_philosophers = my_atoi(av[1]);
+	if ((*info)->number_of_philosophers > 200)
+		return (ft_putstr_fd("Argument out of range!", 2), 1);
 	(*info)->time_to_die = my_atoi(av[2]);
 	(*info)->time_to_eat = my_atoi(av[3]);
 	(*info)->time_to_sleep = my_atoi(av[4]);
@@ -89,7 +91,9 @@ int	parsing(char **av, t_info **info)
 	(*info) = malloc(sizeof(t_info));
 	if (!*info)
 		return (ft_putstr_fd("Malloc failed!", 2), 1);
-	if (save_data(av, info) || init_philo(info))
+	if (save_data(av, info))
+		return (free_info(*info), 1);
+	if (init_philo(info))
 		return (free_leaks(*info), 1);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: ymakhlou <ymakhlou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 18:17:03 by ymakhlou          #+#    #+#             */
-/*   Updated: 2024/08/08 16:26:13 by ymakhlou         ###   ########.fr       */
+/*   Updated: 2024/08/13 16:09:09 by ymakhlou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,15 +69,12 @@ int	my_atoi(char *str)
 	long	res;
 
 	res = 0;
+	if (*str == '+')
+		str++;
 	while (*str >= '0' && *str <= '9')
 	{
 		res = (res * 10) + (*str - '0');
 		str++;
-	}
-	if (res >= 2147483648)
-	{
-		ft_putstr_fd("Argument out of range", 2);
-		return (1);
 	}
 	return (res);
 }

@@ -6,11 +6,18 @@
 /*   By: ymakhlou <ymakhlou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 15:14:05 by ymakhlou          #+#    #+#             */
-/*   Updated: 2024/08/11 20:27:54 by ymakhlou         ###   ########.fr       */
+/*   Updated: 2024/08/13 15:59:18 by ymakhlou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	free_info(t_info *info)
+{
+	free(info->philo);
+	free(info->forks);
+	free(info);
+}
 
 void	free_leaks(t_info *info)
 {
@@ -22,8 +29,8 @@ void	free_leaks(t_info *info)
 	pthread_mutex_destroy(&info->lock_full);
 	while (i < info->number_of_philosophers)
 	{
-		pthread_mutex_destroy(&info->philo[i].r_fork);
-		pthread_mutex_destroy(&info->philo[i].l_fork);
+		pthread_mutex_destroy(info->philo[i].r_fork);
+		pthread_mutex_destroy(info->philo[i].l_fork);
 		i++;
 	}
 	pthread_mutex_destroy(info->forks);

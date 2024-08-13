@@ -6,7 +6,7 @@
 /*   By: ymakhlou <ymakhlou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 12:36:11 by ymakhlou          #+#    #+#             */
-/*   Updated: 2024/08/09 16:23:27 by ymakhlou         ###   ########.fr       */
+/*   Updated: 2024/08/13 16:06:28 by ymakhlou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ typedef struct s_info
 }	t_info;
 
 int		parsing(char **av, t_info **info);
-int		save_data(char **av, t_info **info);
-int		init_data(t_info **info);
+void	save_data(char **av, t_info **info);
+void	init_data(t_info **info);
 int		ft_isdigit(int c);
 int		ft_strlen(char	*av);
 int		my_atoi(char *str);
