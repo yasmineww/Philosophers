@@ -2,7 +2,7 @@
 
 The purpose of this project is to learn how to handle multiple threads (inside a single process), trying to access shared resources. The goal is to make sure your code is optimized as much as possible by implementing thread synchronization, while avoiding all kind of conflicts (data races, deadlocks, leaks, undefined behaviors..). Of course, setting ridiculously long waiting times as a solution would be considered cheating, and cmon that’s definitely not smart so let’s be professionals here.
 
-Your program will take a maximum of 5 arguments, the fifth being optional :
+Our program will take a maximum of 5 arguments, the fifth being optional :
 
 - number_of_philosophers (same as the number of forks)
 - time_to_die (in milliseconds)
@@ -77,6 +77,26 @@ int pthread_mutex_destroy(pthread_mutex_t *mutex);
 
 This function checks if a mutex is unlocked and destroys the *unlocked* mutex, freeing whatever resources it might hold.
 
+You might notice that I used the **pthread_detach** function, to correctly monitor my threads using the main process:
+
+```
+int pthread_detach(pthread_t thread);
+```
+
+It helped me to allow the main process to continue executing without the need to wait for each thread to finish (unlike **pthread_join**). Also, detach sets the program to automatically clean up the thread's resources after finishing execution.
+
 # Bonus - Assignment
 
+The bonus part revolves around the same core idea, n number of philosopher that must eat and avoid dying during the entire simulation. This time, we will be managing processes, not threads. Instead of assigning a left and right fork to each philosopher, we will have a bowl of forks (pool of resources) to be managed. Take note that the **main process is not a philosopher**. We will be exploring the concept of **semaphores**, instead of mutexes.
 
+Our program will take the same input as the mandatory, and will be parsed similarly.
+
+# Bonus - key concepts
+
+## Processes and semaphores
+
+When a program starts, it exists on the hard drive, the system loads the program's instructions into RAM. This state of execution in the RAM is a **process**. Processes run independently within separate virtual memory spaces, isolated and have complex communication.
+
+We use fork() systemcall to create our philosophers (processes), which will be its exact clone and executed simultaneously. Each child process will have a distinct virtual memory but will still share the same RAM as the parent process. Also note that our philosophers will inherit the parent process instruction pointer which contains the memory address of the current instruction. So basically our philosophers will start executing code at the same place that the parent is. A child process doesn’t start all the way from the beginning of the code. 
+
+In order to synchronize the resources that are still shared between processes, we use **semaphores**. A semaphore is a synchronization primitive, that answer to the same issue pointed out to by mutexes. The value of a semaphore represents the number of units available of the resource (number of forks available for use in the bowl). There exist a **binary** and a **counting** type of semaphore.
